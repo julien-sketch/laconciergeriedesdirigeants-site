@@ -1,1415 +1,1005 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html class="scroll-smooth" lang="fr">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>La Conciergerie des Dirigeants — Rhône-Alpes</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-  :root {
-    --gold: #c9a84c;
-    --gold-light: #e6c364;
-    --gold-dim: #8a6e2f;
-    --black: #080810;
-    --dark: #0e0e16;
-    --dark-2: #13131c;
-    --dark-3: #1a1a25;
-    --dark-4: #22222f;
-    --dark-5: #2a2a3a;
-    --text: #e8e4dc;
-    --text-dim: #9b9080;
-    --text-muted: #554e42;
-    --border: rgba(201,168,76,0.12);
-    --border-dim: rgba(201,168,76,0.06);
-  }
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>La Conciergerie des Dirigeants | Déléguez. Gagnez du temps.</title>
+  <meta
+    name="description"
+    content="La Conciergerie des Dirigeants centralise et exécute vos demandes professionnelles et personnelles pour vous faire gagner du temps. Une app dédiée pour envoyer vos demandes en 1 clic."
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: var(--black); }
-  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-
-  /* ─── TYPOGRAPHY ─── */
-  .serif { font-family: 'Cormorant Garamond', serif; }
-  .gold { color: var(--gold-light); }
-  .dim { color: var(--text-dim); }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 48px;
-    background: rgba(8,8,16,0.75);
-    backdrop-filter: blur(24px);
-    border-bottom: 1px solid var(--border-dim);
-    transition: padding 0.4s ease;
-  }
-  nav.scrolled { padding: 14px 48px; }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    text-decoration: none;
-  }
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--gold-light); }
-  .nav-cta {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    border: 1px solid var(--gold);
-    padding: 10px 24px;
-    text-decoration: none;
-    transition: all 0.4s;
-  }
-  .nav-cta:hover { background: var(--gold); color: var(--black); }
-  .nav-mobile-btn { display: none; cursor: pointer; }
-
-  /* ─── HERO ─── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 0 48px;
-    overflow: hidden;
-    background: var(--black);
-  }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-  .hero-orb-1 {
-    position: absolute;
-    top: -15%;
-    right: -5%;
-    width: 65vw;
-    height: 65vw;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);
-    animation: breathe 8s ease-in-out infinite;
-  }
-  .hero-orb-2 {
-    position: absolute;
-    bottom: -20%;
-    left: -10%;
-    width: 45vw;
-    height: 45vw;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 65%);
-    animation: breathe 12s ease-in-out infinite reverse;
-  }
-  .hero-line {
-    position: absolute;
-    top: 0;
-    right: 30%;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.15), transparent);
-  }
-  @keyframes breathe {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.08); opacity: 0.7; }
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 780px;
-  }
-  .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-  .hero-eyebrow-line {
-    width: 40px;
-    height: 1px;
-    background: var(--gold);
-  }
-  .hero-eyebrow-text {
-    font-size: 10px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 7vw, 92px);
-    font-weight: 300;
-    line-height: 1.05;
-    color: var(--text);
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.4s forwards;
-  }
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .hero-sub {
-    font-size: 16px;
-    line-height: 1.75;
-    color: var(--text-dim);
-    max-width: 480px;
-    margin-bottom: 52px;
-    font-weight: 300;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.6s forwards;
-  }
-  .hero-actions {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.8s forwards;
-  }
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--gold);
-    color: var(--black);
-    padding: 16px 36px;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.4s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid var(--gold);
-    color: var(--gold-light);
-    padding: 16px 36px;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.4s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .btn-secondary:hover { background: rgba(201,168,76,0.06); transform: translateY(-2px); }
-
-  .hero-scroll-hint {
-    position: absolute;
-    bottom: 40px;
-    left: 48px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    opacity: 0;
-    animation: fadeUp 0.9s 1.2s forwards;
-  }
-  .scroll-line {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-  .scroll-text {
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ─── STATS BAR ─── */
-  .stats-bar {
-    background: var(--dark-2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 0;
-  }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    divide-color: var(--border);
-  }
-  .stat-item {
-    padding: 48px 24px;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-item:last-child { border-right: none; }
-  .stat-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: var(--gold);
-    transition: width 0.5s ease;
-  }
-  .stat-item:hover::after { width: 60%; }
-  .stat-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
-    font-weight: 300;
-    color: var(--gold-light);
-    margin-bottom: 8px;
-    display: block;
-  }
-  .stat-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  /* ─── SECTION HEADERS ─── */
-  .section-header {
-    margin-bottom: 72px;
-  }
-  .section-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
-  }
-  .eyebrow-line { width: 32px; height: 1px; background: var(--gold); }
-  .eyebrow-text {
-    font-size: 9px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 4vw, 56px);
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--text);
-  }
-  .section-title em { font-style: italic; color: var(--gold-light); }
-
-  /* ─── SERVICES ─── */
-  .services {
-    padding: 120px 48px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1px solid var(--border);
-    gap: 0;
-  }
-  .service-card {
-    padding: 48px 40px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.4s;
-    cursor: default;
-  }
-  .service-card:nth-child(3n) { border-right: none; }
-  .service-card:nth-child(4),
-  .service-card:nth-child(5),
-  .service-card:nth-child(6) { border-bottom: none; }
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 2px;
-    height: 0;
-    background: var(--gold);
-    transition: height 0.5s ease;
-  }
-  .service-card:hover { background: var(--dark-2); }
-  .service-card:hover::before { height: 100%; }
-  .service-icon {
-    width: 44px;
-    height: 44px;
-    margin-bottom: 28px;
-    opacity: 0.8;
-  }
-  .service-icon svg { width: 100%; height: 100%; }
-  .service-num {
-    position: absolute;
-    top: 32px; right: 32px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 300;
-    color: rgba(201,168,76,0.06);
-    line-height: 1;
-    transition: color 0.4s;
-  }
-  .service-card:hover .service-num { color: rgba(201,168,76,0.12); }
-  .service-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 14px;
-    line-height: 1.3;
-  }
-  .service-desc {
-    font-size: 13px;
-    line-height: 1.75;
-    color: var(--text-dim);
-  }
-
-  /* ─── DIFFERENTIATOR ─── */
-  .differentiator {
-    background: var(--dark-2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 100px 48px;
-  }
-  .diff-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
-    align-items: center;
-  }
-  .diff-left .big-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 3.5vw, 48px);
-    font-weight: 300;
-    line-height: 1.3;
-    color: var(--text);
-  }
-  .diff-left .big-quote em { font-style: italic; color: var(--gold-light); }
-  .diff-left .quote-attr {
-    margin-top: 32px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .attr-line { width: 32px; height: 1px; background: var(--gold); }
-  .attr-text { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
-  .diff-right {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-  .diff-item {
-    display: flex;
-    gap: 24px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid var(--border-dim);
-  }
-  .diff-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .diff-item-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    color: var(--gold);
-    min-width: 28px;
-    padding-top: 3px;
-  }
-  .diff-item-text h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-  .diff-item-text p { font-size: 13px; line-height: 1.7; color: var(--text-dim); }
-
-  /* ─── METHOD ─── */
-  .method {
-    padding: 120px 48px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .method-steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    margin-top: 72px;
-  }
-  .method-step {
-    padding: 56px 48px;
-    border-right: 1px solid var(--border);
-    position: relative;
-  }
-  .method-step:last-child { border-right: none; }
-  .step-big-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 100px;
-    font-weight: 300;
-    color: rgba(201,168,76,0.05);
-    line-height: 1;
-    position: absolute;
-    top: 24px; right: 24px;
-    pointer-events: none;
-  }
-  .step-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-    margin-bottom: 20px;
-    display: block;
-  }
-  .step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 16px;
-  }
-  .step-desc {
-    font-size: 13px;
-    line-height: 1.75;
-    color: var(--text-dim);
-    margin-bottom: 28px;
-  }
-  .step-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border-dim);
-  }
-  .step-detail {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text);
-  }
-  .step-dot { width: 4px; height: 4px; background: var(--gold); flex-shrink: 0; }
-
-  /* ─── PRICING ─── */
-  .pricing {
-    background: var(--dark-2);
-    padding: 120px 48px;
-    border-top: 1px solid var(--border);
-  }
-  .pricing-inner { max-width: 1200px; margin: 0 auto; }
-  .pricing-header { text-align: center; margin-bottom: 80px; }
-  .pricing-subtext {
-    margin-top: 16px;
-    font-size: 13px;
-    color: var(--text-dim);
-    letter-spacing: 0.05em;
-  }
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-  }
-  .price-card {
-    padding: 52px 44px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-  .price-card:last-child { border-right: none; }
-  .price-card.featured {
-    background: var(--dark-3);
-    border: 2px solid var(--gold);
-    margin: -1px;
-    z-index: 2;
-  }
-  .price-badge {
-    position: absolute;
-    top: 0; right: 0;
-    background: var(--gold);
-    color: var(--black);
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 7px 16px;
-  }
-  .price-tier {
-    font-size: 9px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-  .price-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 30px;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 28px;
-  }
-  .price-amount {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .price-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 300;
-    color: var(--gold-light);
-    line-height: 1;
-  }
-  .price-currency { font-size: 20px; color: var(--gold); align-self: flex-start; padding-top: 8px; }
-  .price-period { font-size: 13px; color: var(--text-dim); }
-  .price-requests {
-    display: inline-block;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 36px;
-  }
-  .price-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    flex-grow: 1;
-    margin-bottom: 44px;
-  }
-  .price-features li {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.5;
-  }
-  .price-features li .feat-dot {
-    width: 4px;
-    height: 4px;
-    background: var(--gold);
-    flex-shrink: 0;
-    margin-top: 7px;
-  }
-  .price-features li.highlight { color: var(--text); }
-  .price-cta-outline {
-    width: 100%;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-dim);
-    padding: 16px;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .price-cta-outline:hover { border-color: var(--gold); color: var(--gold); }
-  .price-cta-gold {
-    width: 100%;
-    background: var(--gold);
-    border: none;
-    color: var(--black);
-    padding: 16px;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.4s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .price-cta-gold:hover { background: var(--gold-light); }
-
-  /* ─── TRUST BAR ─── */
-  .trust {
-    background: var(--black);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 64px 48px;
-  }
-  .trust-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-  .trust-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    padding: 20px;
-  }
-  .trust-item:last-child { border-right: none; }
-  .trust-icon {
-    width: 36px;
-    height: 36px;
-    color: var(--gold);
-  }
-  .trust-icon svg { width: 100%; height: 100%; }
-  .trust-label {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text);
-  }
-
-  /* ─── TESTIMONIALS ─── */
-  .testimonials {
-    padding: 120px 48px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    margin-top: 72px;
-  }
-  .testi-card {
-    padding: 60px 52px;
-    border-right: 1px solid var(--border);
-    position: relative;
-    transition: background 0.4s;
-  }
-  .testi-card:last-child { border-right: none; }
-  .testi-card:hover { background: var(--dark-2); }
-  .testi-quote-mark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 80px;
-    line-height: 1;
-    color: rgba(201,168,76,0.15);
-    margin-bottom: 8px;
-    font-style: italic;
-    display: block;
-  }
-  .testi-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-style: italic;
-    font-weight: 300;
-    line-height: 1.65;
-    color: var(--text);
-    margin-bottom: 36px;
-  }
-  .testi-author {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .author-line { width: 24px; height: 1px; background: var(--gold); }
-  .author-name {
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .testi-stars {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 24px;
-  }
-  .star { color: var(--gold); font-size: 12px; }
-
-  /* ─── CTA SECTION ─── */
-  .cta-section {
-    background: var(--dark-2);
-    border-top: 1px solid var(--border);
-    padding: 140px 48px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-bg-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18vw;
-    font-weight: 300;
-    color: rgba(201,168,76,0.02);
-    white-space: nowrap;
-    pointer-events: none;
-    line-height: 1;
-  }
-  .cta-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
-  .cta-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(42px, 5vw, 68px);
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
-  .cta-title em { font-style: italic; color: var(--gold-light); }
-  .cta-sub { font-size: 16px; color: var(--text-dim); margin-bottom: 52px; line-height: 1.7; }
-  .cta-actions { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-  .cta-whatsapp {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid var(--gold);
-    color: var(--gold-light);
-    padding: 16px 36px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-family: 'DM Sans', sans-serif;
-    text-decoration: none;
-    transition: all 0.4s;
-  }
-  .cta-whatsapp:hover { background: rgba(201,168,76,0.06); transform: translateY(-2px); }
-  .cta-divider {
-    margin-top: 80px;
-    padding-top: 56px;
-    border-top: 1px solid var(--border-dim);
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-  .cta-contact-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  .contact-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
-  .contact-value { font-size: 13px; color: var(--gold); letter-spacing: 0.05em; }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--black);
-    border-top: 1px solid var(--border);
-    padding: 60px 48px 40px;
-  }
-  .footer-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 48px;
-    padding-bottom: 48px;
-    border-bottom: 1px solid var(--border-dim);
-  }
-  .footer-brand {}
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-style: italic;
-    color: var(--gold-light);
-    letter-spacing: 0.05em;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .footer-tagline { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
-  .footer-col-title {
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 24px;
-  }
-  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .footer-links a {
-    font-size: 12px;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.3s;
-    letter-spacing: 0.05em;
-  }
-  .footer-links a:hover { color: var(--gold-light); }
-  .footer-bottom {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding-top: 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .footer-copy {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-  .footer-legal {
-    display: flex;
-    gap: 28px;
-  }
-  .footer-legal a {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .footer-legal a:hover { color: var(--gold); }
-
-  /* ─── SECTION REVEAL ANIMATION ─── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  /* ─── MOBILE ─── */
-  @media (max-width: 900px) {
-    nav { padding: 18px 24px; }
-    .nav-links { display: none; }
-    .nav-mobile-btn { display: block; color: var(--gold-light); }
-    .hero { padding: 100px 24px 80px; }
-    .hero-scroll-hint { display: none; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .stat-item:nth-child(2) { border-right: none; }
-    .services { padding: 80px 24px; }
-    .services-grid { grid-template-columns: 1fr; }
-    .service-card { border-right: none; }
-    .service-card:nth-child(3n) { border-right: none; }
-    .service-card:nth-child(4),
-    .service-card:nth-child(5) { border-bottom: 1px solid var(--border); }
-    .differentiator { padding: 80px 24px; }
-    .diff-inner { grid-template-columns: 1fr; gap: 60px; }
-    .method { padding: 80px 24px; }
-    .method-steps { grid-template-columns: 1fr; }
-    .method-step { border-right: none; border-bottom: 1px solid var(--border); }
-    .method-step:last-child { border-bottom: none; }
-    .pricing { padding: 80px 24px; }
-    .pricing-grid { grid-template-columns: 1fr; border: none; gap: 24px; }
-    .price-card { border-right: none; border: 1px solid var(--border); }
-    .price-card.featured { margin: 0; }
-    .trust { padding: 48px 24px; }
-    .trust-grid { grid-template-columns: repeat(2, 1fr); }
-    .trust-item:nth-child(2) { border-right: none; }
-    .trust-item { border-bottom: 1px solid var(--border); }
-    .trust-item:nth-child(3),
-    .trust-item:nth-child(4) { border-bottom: none; }
-    .testimonials { padding: 80px 24px; }
-    .testi-grid { grid-template-columns: 1fr; }
-    .testi-card { border-right: none; border-bottom: 1px solid var(--border); }
-    .testi-card:last-child { border-bottom: none; }
-    .cta-section { padding: 100px 24px; }
-    footer { padding: 48px 24px 32px; }
-    .footer-inner { grid-template-columns: 1fr; gap: 40px; }
-    .footer-bottom { flex-direction: column; align-items: flex-start; }
-  }
-</style>
-</head>
-<body>
-
-<!-- ─── NAV ─── -->
-<nav id="navbar">
-  <a class="nav-logo" href="#">La Conciergerie des Dirigeants</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#method">Méthode</a></li>
-    <li><a href="#pricing">Abonnements</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a class="nav-cta" href="#contact">Faire une demande</a>
-  <div class="nav-mobile-btn" onclick="this.closest('nav').querySelector('.nav-links').style.display = this.closest('nav').querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
-    <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><rect y="0" width="22" height="1.5" fill="currentColor"/><rect y="7" width="22" height="1.5" fill="currentColor"/><rect y="14" width="22" height="1.5" fill="currentColor"/></svg>
-  </div>
-</nav>
-
-<!-- ─── HERO ─── -->
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-orb-1"></div>
-    <div class="hero-orb-2"></div>
-    <div class="hero-line"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <span class="hero-eyebrow-line"></span>
-      <span class="hero-eyebrow-text">Rhône-Alpes · Service exclusif</span>
-    </div>
-    <h1 class="hero-title serif">
-      Votre temps est<br/>
-      précieux. <em>Nous le<br/>valorisons.</em>
-    </h1>
-    <p class="hero-sub">Conciergerie dédiée aux dirigeants exigeants — joignable en 2 minutes, opérationnelle en 30. Voyages, art de vivre, événements sur mesure.</p>
-    <div class="hero-actions">
-      <a class="btn-primary" href="#contact">
-        Faire une demande
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2"/></svg>
-      </a>
-      <a class="btn-secondary" href="#pricing">Voir les abonnements</a>
-    </div>
-  </div>
-  <div class="hero-scroll-hint">
-    <div class="scroll-line"></div>
-    <span class="scroll-text">Découvrir</span>
-  </div>
-</section>
-
-<!-- ─── STATS BAR ─── -->
-<section class="stats-bar">
-  <div class="stats-grid">
-    <div class="stat-item reveal">
-      <span class="stat-number serif">10h</span>
-      <span class="stat-label">gagnées par mois en moyenne</span>
-    </div>
-    <div class="stat-item reveal reveal-delay-1">
-      <span class="stat-number serif">94</span>
-      <span class="stat-label">partenaires de confiance</span>
-    </div>
-    <div class="stat-item reveal reveal-delay-2">
-      <span class="stat-number serif">87%</span>
-      <span class="stat-label">demandes traitées &lt; 30 min</span>
-    </div>
-    <div class="stat-item reveal reveal-delay-3">
-      <span class="stat-number serif">2 min</span>
-      <span class="stat-label">temps de joignabilité</span>
-    </div>
-  </div>
-</section>
-
-<!-- ─── SERVICES ─── -->
-<section class="services" id="services">
-  <div class="section-header reveal">
-    <div class="section-eyebrow">
-      <span class="eyebrow-line"></span>
-      <span class="eyebrow-text">Ce que nous faisons</span>
-    </div>
-    <h2 class="section-title serif">L'Excellence <em>Opérationnelle</em></h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <span class="service-num serif">01</span>
-      <div class="service-icon">
-        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 30L22 8l16 22" stroke="#c9a84c" stroke-width="1.2"/><path d="M14 30h16" stroke="#c9a84c" stroke-width="1.2"/><circle cx="22" cy="36" r="2" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <h3 class="service-title serif">Gestion de voyages &amp; séjours d'exception</h3>
-      <p class="service-desc">Itinéraires exclusifs, réservations confidentielles dans les meilleurs hôtels et resorts du monde entier. Villas privées, expériences uniques.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <span class="service-num serif">02</span>
-      <div class="service-icon">
-        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="16" width="36" height="18" stroke="#c9a84c" stroke-width="1.2"/><circle cx="12" cy="34" r="3" stroke="#c9a84c" stroke-width="1.2"/><circle cx="32" cy="34" r="3" stroke="#c9a84c" stroke-width="1.2"/><path d="M4 22h36" stroke="#c9a84c" stroke-width="1.2"/><path d="M28 16V10" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <h3 class="service-title serif">Transports &amp; déplacements premium</h3>
-      <p class="service-desc">Chauffeur privé, jets d'affaires, transferts aéroport, véhicules haut de gamme. Transport express coordonné 24h/24.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <span class="service-num serif">03</span>
-      <div class="service-icon">
-        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 6l4 9 10 1.5-7 7 1.6 10L22 29l-8.6 4.5 1.6-10-7-7L18 15z" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <h3 class="service-title serif">Produits d'exception &amp; Art de vivre</h3>
-      <p class="service-desc">Accès privilégié aux pièces rares, vins fins, spiritueux d'exception. Shopping privé, gastronomie haut de gamme, cadeaux d'affaires sur mesure.</p>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-num serif">04</span>
-      <div class="service-icon">
-        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="16" stroke="#c9a84c" stroke-width="1.2"/><path d="M16 22c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#c9a84c" stroke-width="1.2"/><path d="M22 28v-6" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <h3 class="service-title serif">Expériences uniques &amp; loisirs exclusifs</h3>
-      <p class="service-desc">Yachts, hélicoptères, sorties privées, invitations aux événements majeurs. Accès aux clubs privés et expériences impossibles à réserver.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <span class="service-num serif">05</span>
-      <div class="service-icon">
-        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="32" height="26" stroke="#c9a84c" stroke-width="1.2"/><path d="M14 10V6M30 10V6" stroke="#c9a84c" stroke-width="1.2"/><path d="M6 18h32" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <h3 class="service-title serif">Événements privés &amp; professionnels</h3>
-      <p class="service-desc">Organisation millimétrée de vos réceptions, dîners d'affaires, séminaires, conférences et soirées de gala.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <span class="service-num serif">06</span>
-      <div class="service-icon">
-        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 8c-5.5 0-10 4.5-10 10 0 7 10 18 10 18s10-11 10-18c0-5.5-4.5-10-10-10z" stroke="#c9a84c" stroke-width="1.2"/><circle cx="22" cy="18" r="3" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <h3 class="service-title serif">Bien-être &amp; escapades sur mesure</h3>
-      <p class="service-desc">Retraites exclusives, soins personnalisés, vacances en famille. Une déconnexion totale, coordonnée de A à Z.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ─── DIFFERENTIATOR ─── -->
-<section class="differentiator">
-  <div class="diff-inner">
-    <div class="diff-left reveal">
-      <blockquote class="big-quote serif">
-        "Le seul concierge joignable en <em>2 minutes</em>, pas en 2 heures."
-      </blockquote>
-      <div class="quote-attr">
-        <span class="attr-line"></span>
-        <span class="attr-text">Notre engagement différenciateur</span>
-      </div>
-    </div>
-    <div class="diff-right reveal reveal-delay-2">
-      <div class="diff-item">
-        <span class="diff-item-num serif">—</span>
-        <div class="diff-item-text">
-          <h4 class="serif">Proximité Rhône-Alpes</h4>
-          <p>Ancré dans votre région, disponible en quelques minutes. Là où les grandes conciergeries nationales ne peuvent structurellement pas vous égaler.</p>
-        </div>
-      </div>
-      <div class="diff-item">
-        <span class="diff-item-num serif">—</span>
-        <div class="diff-item-text">
-          <h4 class="serif">Lien humain direct</h4>
-          <p>Pas de call center, pas de ticket. Vous parlez directement à votre concierge, sur le canal que vous préférez : téléphone, WhatsApp ou visio.</p>
-        </div>
-      </div>
-      <div class="diff-item">
-        <span class="diff-item-num serif">—</span>
-        <div class="diff-item-text">
-          <h4 class="serif">Zéro charge mentale</h4>
-          <p>Vous décidez. Nous exécutons. Chaque demande est prise en charge de l'intention au résultat, avec un reporting court et lisible.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── METHOD ─── -->
-<section class="method" id="method">
-  <div class="section-header reveal">
-    <div class="section-eyebrow">
-      <span class="eyebrow-line"></span>
-      <span class="eyebrow-text">Un protocole de rigueur</span>
-    </div>
-    <h2 class="section-title serif">Notre méthode <em>en 3 étapes</em></h2>
-  </div>
-  <div class="method-steps">
-    <div class="method-step reveal">
-      <span class="step-big-num serif">01</span>
-      <span class="step-num serif">01 —</span>
-      <h3 class="step-title serif">Brief express</h3>
-      <p class="step-desc">On cadre votre besoin sans détour, priorités claires et contraintes posées. Vous décidez, nous exécutons.</p>
-      <div class="step-details">
-        <div class="step-detail"><span class="step-dot"></span>Téléphone · Visio · WhatsApp</div>
-        <div class="step-detail"><span class="step-dot"></span>Priorités définies dès le brief</div>
-        <div class="step-detail"><span class="step-dot"></span>Budget et délais validés ensemble</div>
-      </div>
-    </div>
-    <div class="method-step reveal reveal-delay-1">
-      <span class="step-big-num serif">02</span>
-      <span class="step-num serif">02 —</span>
-      <h3 class="step-title serif">Plan d'action validé</h3>
-      <p class="step-desc">Un plan simple, daté, avec les points de contrôle. Validation rapide, exécution immédiate.</p>
-      <div class="step-details">
-        <div class="step-detail"><span class="step-dot"></span>Récap écrit lisible en 60 secondes</div>
-        <div class="step-detail"><span class="step-dot"></span>Alternatives argumentées</div>
-        <div class="step-detail"><span class="step-dot"></span>Coût · Délai · Impact</div>
-      </div>
-    </div>
-    <div class="method-step reveal reveal-delay-2">
-      <span class="step-big-num serif">03</span>
-      <span class="step-num serif">03 —</span>
-      <h3 class="step-title serif">Exécution prioritaire</h3>
-      <p class="step-desc">Réseau vérifié, délais tenus, reporting court. Vous suivez l'avancement, sans charge mentale.</p>
-      <div class="step-details">
-        <div class="step-detail"><span class="step-dot"></span>94 prestataires triés sur le volet</div>
-        <div class="step-detail"><span class="step-dot"></span>Charte qualité engagée</div>
-        <div class="step-detail"><span class="step-dot"></span>Suivi transparent jusqu'au résultat</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── PRICING ─── -->
-<section class="pricing" id="pricing">
-  <div class="pricing-inner">
-    <div class="pricing-header reveal">
-      <div class="section-eyebrow" style="justify-content:center">
-        <span class="eyebrow-line"></span>
-        <span class="eyebrow-text">Accès illimité · Sans engagement caché</span>
-        <span class="eyebrow-line"></span>
-      </div>
-      <h2 class="section-title serif">Nos <em>abonnements</em></h2>
-      <p class="pricing-subtext">Toutes les demandes sont désormais illimitées dans leur catégorie respective.</p>
-    </div>
-    <div class="pricing-grid reveal">
-      <!-- STANDARD -->
-      <div class="price-card">
-        <div class="price-tier">Accès</div>
-        <div class="price-name serif">Standard</div>
-        <div class="price-amount">
-          <span class="price-currency">€</span>
-          <span class="price-num serif">390</span>
-          <span class="price-period">/mois</span>
-        </div>
-        <div class="price-requests">Demandes illimitées</div>
-        <ul class="price-features">
-          <li><span class="feat-dot"></span>Réservations restaurants &amp; hôtels</li>
-          <li><span class="feat-dot"></span>Recherche de prestataires</li>
-          <li><span class="feat-dot"></span>Assistance pro &amp; personnelle</li>
-          <li><span class="feat-dot"></span>Délai de traitement : 48h</li>
-          <li><span class="feat-dot"></span>Canal dédié WhatsApp / téléphone</li>
-        </ul>
-        <button class="price-cta-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Choisir Standard</button>
-      </div>
-      <!-- PERFORMANCE -->
-      <div class="price-card featured">
-        <div class="price-badge">Conseillé</div>
-        <div class="price-tier">Excellence</div>
-        <div class="price-name serif">Performance</div>
-        <div class="price-amount">
-          <span class="price-currency">€</span>
-          <span class="price-num serif">790</span>
-          <span class="price-period">/mois</span>
-        </div>
-        <div class="price-requests">Demandes illimitées</div>
-        <ul class="price-features">
-          <li class="highlight"><span class="feat-dot"></span>Tout le Standard inclus</li>
-          <li><span class="feat-dot"></span>Réservations vols &amp; voyages inclus</li>
-          <li><span class="feat-dot"></span>1 coffret gastronomique / mois</li>
-          <li><span class="feat-dot"></span>Accès événements dirigeants (1 place)</li>
-          <li><span class="feat-dot"></span>Délai de traitement : 24h</li>
-          <li class="highlight"><span class="feat-dot"></span>Ligne directe prioritaire</li>
-        </ul>
-        <button class="price-cta-gold" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">S'abonner</button>
-      </div>
-      <!-- DÉVELOPPEMENT -->
-      <div class="price-card">
-        <div class="price-tier">Élite</div>
-        <div class="price-name serif">Développement</div>
-        <div class="price-amount">
-          <span class="price-currency">€</span>
-          <span class="price-num serif">990</span>
-          <span class="price-period">/mois</span>
-        </div>
-        <div class="price-requests">Demandes illimitées</div>
-        <ul class="price-features">
-          <li class="highlight"><span class="feat-dot"></span>Tout le Performance inclus</li>
-          <li><span class="feat-dot"></span>Urgences week-end &amp; jours fériés</li>
-          <li><span class="feat-dot"></span>4 coffrets gastronomiques / an</li>
-          <li><span class="feat-dot"></span>Accès événements dirigeants (2 places)</li>
-          <li class="highlight" style="color:var(--gold-light)"><span class="feat-dot"></span>Priorité 24h absolue</li>
-          <li><span class="feat-dot"></span>Reporting mensuel personnalisé</li>
-        </ul>
-        <button class="price-cta-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Choisir Élite</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── TRUST BAR ─── -->
-<section class="trust">
-  <div class="trust-grid">
-    <div class="trust-item reveal">
-      <div class="trust-icon">
-        <svg viewBox="0 0 36 36" fill="none"><path d="M18 4L6 9v10c0 7 5.4 13.5 12 15.5 6.6-2 12-8.5 12-15.5V9L18 4z" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <span class="trust-label">Discrétion</span>
-    </div>
-    <div class="trust-item reveal reveal-delay-1">
-      <div class="trust-icon">
-        <svg viewBox="0 0 36 36" fill="none"><rect x="6" y="16" width="24" height="16" stroke="#c9a84c" stroke-width="1.2"/><path d="M12 16v-4a6 6 0 0112 0v4" stroke="#c9a84c" stroke-width="1.2"/><circle cx="18" cy="24" r="2" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <span class="trust-label">Sécurité</span>
-    </div>
-    <div class="trust-item reveal reveal-delay-2">
-      <div class="trust-icon">
-        <svg viewBox="0 0 36 36" fill="none"><path d="M18 6l3 8 8 1-6 6 1.5 8L18 25l-6.5 4 1.5-8-6-6 8-1z" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <span class="trust-label">Traçabilité</span>
-    </div>
-    <div class="trust-item reveal reveal-delay-3">
-      <div class="trust-icon">
-        <svg viewBox="0 0 36 36" fill="none"><path d="M8 8h20v16H8z" stroke="#c9a84c" stroke-width="1.2"/><path d="M8 24l6-5 4 3 4-3 6 5" stroke="#c9a84c" stroke-width="1.2"/><circle cx="18" cy="16" r="3" stroke="#c9a84c" stroke-width="1.2"/></svg>
-      </div>
-      <span class="trust-label">Ligne directe</span>
-    </div>
-  </div>
-</section>
-
-<!-- ─── TESTIMONIALS ─── -->
-<section class="testimonials">
-  <div class="section-header reveal">
-    <div class="section-eyebrow">
-      <span class="eyebrow-line"></span>
-      <span class="eyebrow-text">Ils nous font confiance</span>
-    </div>
-    <h2 class="section-title serif">Ce que disent <em>nos dirigeants</em></h2>
-  </div>
-  <div class="testi-grid">
-    <div class="testi-card reveal">
-      <div class="testi-stars">
-        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-      </div>
-      <span class="testi-quote-mark serif">"</span>
-      <p class="testi-text serif">Un service qui me permet de me concentrer sur l'essentiel. La réactivité est sans faille — joignable à n'importe quelle heure, résultat garanti.</p>
-      <div class="testi-author">
-        <span class="author-line"></span>
-        <span class="author-name">Dirigeant PME · Rhône-Alpes</span>
-      </div>
-    </div>
-    <div class="testi-card reveal reveal-delay-1">
-      <div class="testi-stars">
-        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-      </div>
-      <span class="testi-quote-mark serif">"</span>
-      <p class="testi-text serif">Très réactif, bel esprit et grand professionnalisme. La conciergerie a transformé ma gestion du quotidien. Un luxe devenu indispensable.</p>
-      <div class="testi-author">
-        <span class="author-line"></span>
-        <span class="author-name">Avocat Associé · Lyon</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA SECTION ─── -->
-<section class="cta-section" id="contact">
-  <div class="cta-bg-text serif">LCD</div>
-  <div class="cta-inner">
-    <div class="reveal">
-      <div class="section-eyebrow" style="justify-content:center; margin-bottom:24px">
-        <span class="eyebrow-line"></span>
-        <span class="eyebrow-text">Prise de contact</span>
-        <span class="eyebrow-line"></span>
-      </div>
-      <h2 class="cta-title serif">Vous décidez,<br/><em>nous exécutons.</em></h2>
-      <p class="cta-sub">Prenez rendez-vous en 2 minutes pour définir votre accompagnement sur mesure. Aucun engagement, premier échange offert.</p>
-      <div class="cta-actions">
-        <a class="btn-primary" href="tel:+33650555651">
-          Prendre RDV
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2"/></svg>
-        </a>
-        <a class="cta-whatsapp" href="https://wa.me/33650555651" target="_blank">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5A6.5 6.5 0 0014.5 8 6.5 6.5 0 008 14.5a6.5 6.5 0 00-3.2-.84L1.5 14.5l.84-3.2A6.5 6.5 0 011.5 8 6.5 6.5 0 018 1.5z" stroke="currentColor" stroke-width="1.1"/></svg>
-          WhatsApp
-        </a>
-      </div>
-      <div class="cta-divider">
-        <div class="cta-contact-item">
-          <span class="contact-label">Téléphone</span>
-          <a href="tel:+33650555651" class="contact-value">06 50 55 56 51</a>
-        </div>
-        <div class="cta-contact-item">
-          <span class="contact-label">Email</span>
-          <a href="mailto:julien@picqtures.fr" class="contact-value">julien@picqtures.fr</a>
-        </div>
-        <div class="cta-contact-item">
-          <span class="contact-label">Zone</span>
-          <span class="contact-value">Rhône-Alpes</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── FOOTER ─── -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="footer-logo serif">La Conciergerie des Dirigeants</span>
-      <p class="footer-tagline">Service de conciergerie premium dédié aux dirigeants exigeants de Rhône-Alpes. Joignable en 2 minutes. Opérationnel en 30.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Services</div>
-      <ul class="footer-links">
-        <li><a href="#services">Gestion de voyages</a></li>
-        <li><a href="#services">Transports premium</a></li>
-        <li><a href="#services">Art de vivre</a></li>
-        <li><a href="#services">Événements privés</a></li>
-        <li><a href="#services">Bien-être &amp; escapades</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Contact</div>
-      <ul class="footer-links">
-        <li><a href="tel:+33650555651">06 50 55 56 51</a></li>
-        <li><a href="mailto:julien@picqtures.fr">julien@picqtures.fr</a></li>
-        <li><a href="https://wa.me/33650555651" target="_blank">WhatsApp direct</a></li>
-        <li><a href="https://www.linkedin.com/in/julien-veyrac/" target="_blank">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/picqtures_conciergerie/" target="_blank">Instagram</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2026 La Conciergerie des Dirigeants — Rhône-Alpes. Excellence Personified.</span>
-    <div class="footer-legal">
-      <a href="#">Mentions légales</a>
-      <a href="#">Politique de confidentialité</a>
-      <a href="#">CGV</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // Navbar scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#1b1b23",
+            "secondary-container": "#e1deea",
+            "secondary": "#5e5d68",
+            "background": "#fdf9f1",
+            "tertiary": "#755b00",
+            "on-primary-container": "#503d00",
+            "on-error": "#ffffff",
+            "surface-bright": "#fdf9f1",
+            "primary-container": "#c9a84c",
+            "tertiary-fixed": "#ffe08f",
+            "surface-dim": "#dddad2",
+            "surface-container-highest": "#e6e2da",
+            "on-primary-fixed-variant": "#584400",
+            "primary-fixed-dim": "#e6c364",
+            "tertiary-fixed-dim": "#e6c364",
+            "secondary-fixed-dim": "#c8c5d1",
+            "error-container": "#ffdad6",
+            "error": "#ba1a1a",
+            "outline-variant": "#d0c5b2",
+            "on-tertiary-fixed-variant": "#584400",
+            "on-tertiary-container": "#503d00",
+            "on-primary-fixed": "#241a00",
+            "on-secondary-container": "#63616c",
+            "tertiary-container": "#c9a84c",
+            "on-tertiary-fixed": "#241a00",
+            "surface": "#fdf9f1",
+            "on-error-container": "#93000a",
+            "surface-container-low": "#f7f3eb",
+            "secondary-fixed": "#e4e1ed",
+            "surface-container-high": "#ece8e0",
+            "surface-container": "#f2ede5",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#f4f0e8",
+            "primary-fixed": "#ffe08f",
+            "primary": "#755b00",
+            "outline": "#7e7665",
+            "on-surface-variant": "#4d4637",
+            "on-background": "#1c1c17",
+            "on-surface": "#1c1c17",
+            "inverse-surface": "#31302b",
+            "surface-tint": "#755b00",
+            "surface-variant": "#e6e2da",
+            "inverse-primary": "#e6c364",
+            "on-secondary-fixed-variant": "#474650"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          boxShadow: {
+            soft: "0 20px 40px rgba(94, 93, 104, 0.06)",
+            card: "0 18px 36px rgba(117, 91, 0, 0.08)",
+            float: "0 24px 70px rgba(28, 28, 23, 0.08)"
+          }
+        }
       }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
-</script>
+    }
+  </script>
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+    }
+
+    .glass-nav {
+      background: rgba(253, 249, 241, 0.88);
+      backdrop-filter: blur(20px);
+    }
+
+    .gold-gradient {
+      background: linear-gradient(135deg, #755b00, #c9a84c);
+    }
+
+    .soft-ring {
+      box-shadow: 0 0 0 1px rgba(117, 91, 0, 0.06);
+    }
+
+    .hero-grid {
+      min-height: min(860px, calc(100vh - 80px));
+    }
+
+    .section-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .section-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(94, 93, 104, 0.08);
+      border-color: rgba(117, 91, 0, 0.12);
+    }
+
+    .faq-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      .hero-grid {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full z-50 glass-nav shadow-soft border-b border-outline-variant/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-20 flex items-center justify-between gap-4">
+      <a href="#" class="text-lg sm:text-xl md:text-2xl font-headline tracking-tight text-on-surface leading-tight max-w-[220px] sm:max-w-none">
+        La Conciergerie des Dirigeants
+      </a>
+
+      <div class="hidden lg:flex items-center space-x-8 xl:space-x-10">
+        <a class="text-secondary font-headline italic text-base xl:text-lg tracking-tight hover:text-primary transition-colors duration-300" href="#probleme">Pourquoi</a>
+        <a class="text-secondary font-headline italic text-base xl:text-lg tracking-tight hover:text-primary transition-colors duration-300" href="#services">Demandes</a>
+        <a class="text-secondary font-headline italic text-base xl:text-lg tracking-tight hover:text-primary transition-colors duration-300" href="#app">Application</a>
+        <a class="text-secondary font-headline italic text-base xl:text-lg tracking-tight hover:text-primary transition-colors duration-300" href="#tarifs">Tarifs</a>
+        <a class="text-secondary font-headline italic text-base xl:text-lg tracking-tight hover:text-primary transition-colors duration-300" href="#faq">FAQ</a>
+      </div>
+
+      <div class="hidden sm:flex items-center gap-3">
+        <a
+          class="gold-gradient text-white px-4 md:px-6 py-2.5 rounded-xl text-[11px] md:text-sm font-semibold uppercase tracking-widest hover:scale-[0.98] duration-200 transition-transform shadow-card"
+          href="https://app.laconciergeriedesdirigeants.fr/"
+        >
+          Accéder à l’app
+        </a>
+      </div>
+
+      <button
+        id="mobile-menu-button"
+        class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-outline-variant/30 bg-surface-container-lowest"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        type="button"
+      >
+        <span class="material-symbols-outlined text-on-surface">menu</span>
+      </button>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="lg:hidden hidden border-t border-outline-variant/20 bg-surface-container-lowest/95 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-2">
+        <a class="px-4 py-3 rounded-xl hover:bg-surface-container-low text-on-surface font-medium" href="#probleme">Pourquoi</a>
+        <a class="px-4 py-3 rounded-xl hover:bg-surface-container-low text-on-surface font-medium" href="#services">Demandes</a>
+        <a class="px-4 py-3 rounded-xl hover:bg-surface-container-low text-on-surface font-medium" href="#app">Application</a>
+        <a class="px-4 py-3 rounded-xl hover:bg-surface-container-low text-on-surface font-medium" href="#tarifs">Tarifs</a>
+        <a class="px-4 py-3 rounded-xl hover:bg-surface-container-low text-on-surface font-medium" href="#faq">FAQ</a>
+        <a
+          class="mt-2 gold-gradient text-white px-5 py-3 rounded-xl text-sm font-semibold text-center shadow-card"
+          href="https://app.laconciergeriedesdirigeants.fr/"
+        >
+          Accéder à l’application
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-16 sm:pb-20 md:pb-24 px-4 sm:px-6 md:px-8 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-20 right-[-5rem] sm:right-0 w-[18rem] sm:w-[24rem] md:w-[26rem] h-[18rem] sm:h-[24rem] md:h-[26rem] bg-primary-container/10 blur-[110px] rounded-full"></div>
+      <div class="absolute bottom-0 left-[-4rem] sm:left-0 w-[16rem] sm:w-[20rem] md:w-[22rem] h-[16rem] sm:h-[20rem] md:h-[22rem] bg-tertiary-container/10 blur-[100px] rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-2 gap-10 md:gap-14 xl:gap-16 items-center relative z-10 hero-grid">
+      <div class="order-2 xl:order-1">
+        <span class="inline-flex items-center mb-5 px-4 py-1.5 rounded-full bg-surface-container-high text-primary text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em]">
+          Système de délégation pour dirigeants
+        </span>
+
+        <h1 class="font-headline text-[2.35rem] leading-[1.05] sm:text-5xl md:text-6xl xl:text-7xl mb-5 md:mb-7 tracking-tight text-on-surface">
+          Vous dirigez.<br />
+          On gère le reste.
+        </h1>
+
+        <p class="text-base sm:text-lg md:text-xl text-secondary mb-7 max-w-2xl leading-relaxed">
+          Un seul point d’entrée pour déléguer vos demandes professionnelles et personnelles.
+          Vous gagnez du temps, vous réduisez votre charge mentale, et vous avancez plus vite.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5">
+          <a
+            class="gold-gradient text-white px-6 sm:px-8 py-4 rounded-xl font-bold text-center hover:opacity-90 transition-opacity shadow-card"
+            href="https://app.laconciergeriedesdirigeants.fr/"
+          >
+            Accéder à l’application
+          </a>
+          <a
+            class="border border-outline-variant/40 text-primary px-6 sm:px-8 py-4 rounded-xl font-bold text-center hover:bg-surface-container-low transition-colors bg-surface-container-lowest/60"
+            href="#tarifs"
+          >
+            Découvrir l’offre
+          </a>
+        </div>
+
+        <div class="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 max-w-2xl">
+          <div class="bg-surface-container-lowest/90 border border-outline-variant/20 rounded-2xl p-4 soft-ring">
+            <p class="text-sm font-semibold text-on-surface">Accès mensuel</p>
+            <p class="text-xs text-secondary mt-1">Un point d’entrée unique pour vos besoins.</p>
+          </div>
+          <div class="bg-surface-container-lowest/90 border border-outline-variant/20 rounded-2xl p-4 soft-ring">
+            <p class="text-sm font-semibold text-on-surface">App en 1 clic</p>
+            <p class="text-xs text-secondary mt-1">Depuis votre téléphone ou votre ordinateur.</p>
+          </div>
+          <div class="bg-surface-container-lowest/90 border border-outline-variant/20 rounded-2xl p-4 soft-ring">
+            <p class="text-sm font-semibold text-on-surface">Pro + perso</p>
+            <p class="text-xs text-secondary mt-1">Un seul point d’entrée pour tout gérer.</p>
+          </div>
+        </div>
+
+        <p class="mt-7 italic text-tertiary font-headline text-base sm:text-lg">
+          « Un message. Une demande. Une solution. »
+        </p>
+      </div>
+
+      <div class="order-1 xl:order-2 relative">
+        <div class="relative aspect-[4/4.7] sm:aspect-[4/4.9] xl:aspect-[4/5] overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] shadow-float border border-outline-variant/20 bg-surface-container-low">
+          <img
+            src="images/avant-apres.jpg"
+            alt="Avant après délégation dirigeant"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+            <div class="flex items-center justify-between gap-4 text-white text-xs sm:text-sm font-semibold">
+              <span>Avant : vous gérez tout</span>
+              <span>Après : vous déléguez</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden md:block absolute -bottom-8 lg:-bottom-10 -left-4 lg:-left-8 bg-surface-container-lowest p-6 rounded-2xl shadow-card max-w-xs border border-outline-variant/20">
+          <p class="text-sm text-secondary leading-relaxed">
+            Vous n’avez pas besoin de tout faire vous-même.
+            Vous avez besoin d’un système simple pour déléguer vite et avancer.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEME -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface-container-low px-4 sm:px-6 md:px-8" id="probleme">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-12">
+        <div class="lg:col-span-5">
+          <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Le vrai problème</span>
+          <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl leading-tight text-on-surface mt-4">
+            Vous perdez du temps sur des tâches qui ne devraient pas être les vôtres
+          </h2>
+          <p class="text-secondary mt-6 leading-relaxed text-sm sm:text-base">
+            Chercher un prestataire. Gérer un imprévu. Organiser un déplacement.
+            Prendre des rendez-vous. Coordonner des demandes.
+            Ce n’est pas votre rôle, mais vous le faites quand même.
+          </p>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+          <div class="section-card space-y-4 bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-4xl">schedule</span>
+            <h3 class="font-headline text-xl">Perte de temps</h3>
+            <p class="text-secondary text-sm leading-relaxed">
+              Des heures partent dans des tâches secondaires au lieu d’être investies dans votre activité.
+            </p>
+          </div>
+
+          <div class="section-card space-y-4 bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-4xl">psychology</span>
+            <h3 class="font-headline text-xl">Charge mentale</h3>
+            <p class="text-secondary text-sm leading-relaxed">
+              Trop de micro-décisions, trop d’imprévus, trop de sujets qui n’auraient jamais dû remonter jusqu’à vous.
+            </p>
+          </div>
+
+          <div class="section-card space-y-4 bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-4xl">filter_center_focus</span>
+            <h3 class="font-headline text-xl">Manque de focus</h3>
+            <p class="text-secondary text-sm leading-relaxed">
+              Vous vous dispersez sur l’intendance alors que votre valeur est ailleurs : piloter, décider, développer.
+            </p>
+          </div>
+
+          <div class="section-card space-y-4 bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-4xl">bolt</span>
+            <h3 class="font-headline text-xl">Exécution ralentie</h3>
+            <p class="text-secondary text-sm leading-relaxed">
+              Quand tout remonte à vous, tout ralentit. Vous n’avez pas besoin de plus de tâches, mais de plus de fluidité.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="py-16 sm:py-20 md:py-28 px-4 sm:px-6 md:px-8 overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col items-center text-center mb-12 md:mb-20">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">La solution</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4 mb-6">
+          Un seul contact pour tout centraliser et tout faire avancer
+        </h2>
+        <p class="text-base sm:text-lg md:text-xl text-secondary max-w-3xl leading-relaxed">
+          La Conciergerie des Dirigeants est un système de délégation externalisé pour dirigeants,
+          indépendants, micro-entreprises, TPE et sociétés.
+          Vous nous transmettez vos demandes. Nous trouvons la solution et nous l’exécutons rapidement.
+        </p>
+      </div>
+
+      <div class="relative flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 xl:gap-20">
+        <div class="text-center group max-w-xs">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-surface-container-high flex items-center justify-center mb-5 mx-auto transition-transform group-hover:scale-105 border border-outline-variant/20">
+            <span class="material-symbols-outlined text-4xl text-primary">outgoing_mail</span>
+          </div>
+          <h4 class="font-headline text-lg uppercase tracking-[0.2em]">Vous déléguez</h4>
+          <p class="text-secondary text-sm mt-3">
+            Une demande, un besoin, un sujet à traiter.
+          </p>
+        </div>
+
+        <div class="hidden md:block h-px w-20 xl:w-24 bg-outline-variant/30"></div>
+
+        <div class="text-center group max-w-xs">
+          <div class="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full gold-gradient flex items-center justify-center mb-5 mx-auto shadow-card transition-transform group-hover:scale-105">
+            <span class="material-symbols-outlined text-5xl text-white">settings_slow_motion</span>
+          </div>
+          <h4 class="font-headline text-xl uppercase tracking-[0.2em] font-bold">Nous exécutons</h4>
+          <p class="text-secondary text-sm mt-3">
+            Nous analysons, recherchons et coordonnons la bonne solution.
+          </p>
+        </div>
+
+        <div class="hidden md:block h-px w-20 xl:w-24 bg-outline-variant/30"></div>
+
+        <div class="text-center group max-w-xs">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-surface-container-high flex items-center justify-center mb-5 mx-auto transition-transform group-hover:scale-105 border border-outline-variant/20">
+            <span class="material-symbols-outlined text-4xl text-primary">trending_up</span>
+          </div>
+          <h4 class="font-headline text-lg uppercase tracking-[0.2em]">Vous avancez</h4>
+          <p class="text-secondary text-sm mt-3">
+            Plus de temps, moins de charge mentale, plus de vitesse.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface-container-highest/30 px-4 sm:px-6 md:px-8" id="services">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 md:mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Cas d’usage concrets</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4 italic">
+          Ce que vous pouvez nous confier dès cette semaine
+        </h2>
+        <p class="text-secondary mt-5 max-w-3xl mx-auto leading-relaxed text-sm sm:text-base">
+          Vous n’avez pas besoin de tout gérer vous-même. Vous avez besoin d’un point d’entrée unique
+          pour absorber vos demandes pro et perso et trouver des solutions rapidement.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 md:gap-10">
+        <div class="section-card bg-surface-container-lowest p-6 sm:p-8 md:p-10 rounded-3xl shadow-soft border border-outline-variant/20">
+          <div class="flex items-center gap-4 mb-8">
+            <span class="material-symbols-outlined text-primary text-3xl">business_center</span>
+            <h3 class="font-headline text-2xl">Professionnel</h3>
+          </div>
+
+          <ul class="space-y-5">
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Recherche de prestataires fiables et rapides à mobiliser</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Prise de rendez-vous et coordination de planning</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Organisation de déplacements et gestion logistique</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Recherche urgente de solutions sur un besoin précis</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Coordination de tâches et suivi de demandes du quotidien</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Support opérationnel pour éviter les pertes de temps inutiles</li>
+          </ul>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest p-6 sm:p-8 md:p-10 rounded-3xl shadow-soft border border-outline-variant/20">
+          <div class="flex items-center gap-4 mb-8">
+            <span class="material-symbols-outlined text-primary text-3xl">home_work</span>
+            <h3 class="font-headline text-2xl">Personnel</h3>
+          </div>
+
+          <ul class="space-y-5">
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Réservations de restaurants, activités et moments du quotidien</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Organisation de week-ends, séjours et déplacements personnels</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Gestion des imprévus et recherche de solutions rapides</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Logistique familiale et aide sur les sujets du quotidien</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Achats, recherches spécifiques et besoins ponctuels</li>
+            <li class="flex items-start gap-4 text-secondary"><span class="w-2 h-2 mt-2 rounded-full bg-primary-container shrink-0"></span>Tout ce qui vous ralentit alors que vous devriez être ailleurs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENCIATION -->
+  <section class="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="bg-surface-container-lowest rounded-[1.75rem] md:rounded-[2rem] shadow-card border border-outline-variant/20 overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div class="p-6 sm:p-8 md:p-12 lg:p-14 bg-surface-container-low">
+            <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Ce que nous sommes vraiment</span>
+            <h2 class="font-headline text-3xl md:text-4xl mt-4 leading-tight">
+              Un système de délégation, pas une conciergerie classique
+            </h2>
+            <p class="text-secondary mt-6 leading-relaxed">
+              Vous n’achetez pas du luxe.
+              Vous n’achetez pas du confort pour l’image.
+              Vous achetez du temps récupéré, de la charge mentale en moins
+              et de la vitesse d’exécution au quotidien.
+            </p>
+          </div>
+
+          <div class="p-6 sm:p-8 md:p-12 lg:p-14">
+            <div class="space-y-6">
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl shrink-0">done_all</span>
+                <div>
+                  <h3 class="font-semibold text-on-surface">Un seul point d’entrée</h3>
+                  <p class="text-secondary text-sm mt-1">Vous centralisez vos demandes au même endroit au lieu de chercher, appeler et relancer partout.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl shrink-0">acute</span>
+                <div>
+                  <h3 class="font-semibold text-on-surface">Rapidité et exécution</h3>
+                  <p class="text-secondary text-sm mt-1">L’objectif n’est pas de faire joli. L’objectif est de trouver une solution et de faire avancer les choses.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl shrink-0">neurology</span>
+                <div>
+                  <h3 class="font-semibold text-on-surface">Moins de charge mentale</h3>
+                  <p class="text-secondary text-sm mt-1">Vous gardez votre énergie pour décider, piloter, vendre et développer votre activité.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl shrink-0">sync_alt</span>
+                <div>
+                  <h3 class="font-semibold text-on-surface">Pro et perso</h3>
+                  <p class="text-secondary text-sm mt-1">Parce qu’un dirigeant ne coupe pas sa vie en deux. Vous avez besoin d’un système qui absorbe l’ensemble du quotidien.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <section class="py-16 sm:py-20 md:py-28 px-4 sm:px-6 md:px-8 overflow-hidden" id="app">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-10 md:gap-14 lg:gap-20">
+      <div class="space-y-8">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Application dédiée</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl leading-tight">
+          Une app. Une demande. C’est réglé.
+        </h2>
+        <p class="text-base sm:text-lg md:text-xl text-secondary leading-relaxed">
+          Accédez à votre conciergerie directement depuis votre téléphone ou votre ordinateur.
+          Envoyez une demande en quelques secondes, suivez son traitement et gagnez du temps immédiatement.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="section-card bg-surface-container-lowest rounded-2xl p-5 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary mb-3">touch_app</span>
+            <p class="font-semibold text-sm">Demande en 1 clic</p>
+            <p class="text-secondary text-xs mt-1">Simple et immédiat.</p>
+          </div>
+
+          <div class="section-card bg-surface-container-lowest rounded-2xl p-5 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary mb-3">monitoring</span>
+            <p class="font-semibold text-sm">Suivi du traitement</p>
+            <p class="text-secondary text-xs mt-1">Vous savez où en est votre demande.</p>
+          </div>
+
+          <div class="section-card bg-surface-container-lowest rounded-2xl p-5 shadow-soft border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary mb-3">speed</span>
+            <p class="font-semibold text-sm">Zéro friction</p>
+            <p class="text-secondary text-xs mt-1">Vous déléguez sans perdre de temps.</p>
+          </div>
+        </div>
+
+        <div class="pt-1">
+          <a
+            class="inline-flex items-center justify-center gap-3 gold-gradient text-white px-8 sm:px-10 py-4 rounded-xl font-bold hover:scale-[1.02] transition-transform duration-300 shadow-card w-full sm:w-auto"
+            href="https://app.laconciergeriedesdirigeants.fr/"
+          >
+            <span class="material-symbols-outlined">install_mobile</span>
+            Accéder à l’application
+          </a>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center">
+          <div class="aspect-[9/19.5] w-1/2 bg-background rounded-[2rem] overflow-hidden">
+            <img
+              alt="Interface de l'application mobile"
+              class="w-full h-full object-cover"
+              src="images/smartphone.svg"
+            />
+          </div>
+        
+
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-container/10 blur-[100px] -z-10"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALEUR -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface-container-low px-4 sm:px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 items-center">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Pourquoi ça vaut le coup</span>
+          <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight">
+            Ce que vous coûte le fait de tout gérer vous-même
+          </h2>
+          <p class="text-secondary mt-6 leading-relaxed text-sm sm:text-base">
+            Chaque heure passée sur des tâches secondaires est une heure en moins pour votre business,
+            votre croissance, vos clients et votre vie personnelle.
+            Une seule demande bien déléguée peut déjà vous faire gagner du temps, de l’énergie
+            et de la clarté.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div class="section-card bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <h3 class="font-headline text-xl">Temps perdu</h3>
+            <p class="text-secondary text-sm mt-3">Vous gérez des tâches que quelqu’un d’autre pourrait absorber pour vous.</p>
+          </div>
+
+          <div class="section-card bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <h3 class="font-headline text-xl">Décisions retardées</h3>
+            <p class="text-secondary text-sm mt-3">Quand l’opérationnel prend toute la place, l’essentiel attend.</p>
+          </div>
+
+          <div class="section-card bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <h3 class="font-headline text-xl">Charge mentale</h3>
+            <p class="text-secondary text-sm mt-3">Trop de sujets ouverts, trop de relances, trop d’énergie dispersée.</p>
+          </div>
+
+          <div class="section-card bg-surface-container-lowest rounded-3xl p-6 shadow-soft border border-outline-variant/20">
+            <h3 class="font-headline text-xl">Croissance freinée</h3>
+            <p class="text-secondary text-sm mt-3">Votre vraie valeur est dans le pilotage, pas dans l’intendance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARIFS -->
+  <section class="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8" id="tarifs">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 md:mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Offre de lancement</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4 mb-4">
+          Un abonnement simple pour arrêter de tout gérer seul
+        </h2>
+        <p class="text-secondary max-w-3xl mx-auto text-sm sm:text-base">
+          Accédez à un partenaire ressource capable de vous orienter, rechercher des solutions,
+          activer un réseau fiable et vous faire gagner du temps au quotidien.
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="section-card bg-on-surface text-surface-container-lowest p-6 sm:p-8 md:p-10 rounded-3xl shadow-card flex flex-col relative border border-primary-container/20">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 gold-gradient px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white shadow-card">
+            Lancement
+          </div>
+
+          <div class="mb-8 text-center">
+            <h3 class="font-headline text-3xl mb-3">Accès Dirigeant</h3>
+            <div class="flex items-baseline justify-center gap-2 flex-wrap">
+              <span class="text-5xl font-headline font-bold">79€</span>
+              <span class="opacity-70">HT / mois</span>
+            </div>
+            <p class="text-sm text-surface-container-high mt-4 max-w-xl mx-auto">
+              Pour les dirigeants, indépendants, TPE et sociétés qui veulent un point d’entrée unique
+              lorsqu’un besoin apparaît.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+            <div>
+              <h4 class="font-bold text-primary-container mb-4">Inclus dans l’abonnement</h4>
+              <ul class="space-y-4">
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">check</span>Accès à l’application</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">check</span>Accès direct pour envoyer vos demandes</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">check</span>Réponse et orientation sous 72h ouvrées</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">check</span>Recherche simple de solutions</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">check</span>Mise en relation avec des partenaires fiables</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">check</span>Conseils ponctuels pour gagner du temps</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-primary-container mb-4">Facturé séparément si nécessaire</h4>
+              <ul class="space-y-4">
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">add</span>Missions longues ou complexes</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">add</span>Organisation complète d’un projet</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">add</span>Prestations partenaires</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">add</span>Accompagnement commercial ou stratégique</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">add</span>Automatisation, création ou gestion avancée</li>
+                <li class="flex items-start gap-3 text-sm"><span class="material-symbols-outlined text-primary-container">add</span>Temps opérationnel important</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-white/10 rounded-2xl p-5 mb-8 border border-white/10">
+            <p class="text-sm leading-relaxed text-surface-container-high">
+              L’abonnement vous donne accès au service, à l’application, à l’orientation et au réseau.
+              Les demandes nécessitant une prise en charge opérationnelle importante font l’objet d’un devis séparé.
+            </p>
+          </div>
+
+          <a class="block text-center py-4 gold-gradient text-white font-bold hover:opacity-90 transition-opacity rounded-xl shadow-card text-base" href="https://app.laconciergeriedesdirigeants.fr/">
+            Rejoindre l’Accès Dirigeant
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES -->
+  <section class="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-surface">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 md:mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Notre réseau</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4">Nos partenaires</h2>
+        <p class="text-secondary max-w-3xl mx-auto mt-5 leading-relaxed text-sm sm:text-base">
+          Nous nous appuyons sur un réseau de prestataires et de partenaires activables rapidement
+          pour répondre à vos besoins professionnels et personnels avec efficacité.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">directions_car</span>
+          <h3 class="font-semibold text-on-surface">Transport</h3>
+          <p class="text-secondary text-sm mt-2">Déplacements, transferts, solutions de mobilité.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">gavel</span>
+          <h3 class="font-semibold text-on-surface">Juridique</h3>
+          <p class="text-secondary text-sm mt-2">Accompagnement et relais sur les sujets juridiques.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">home_repair_service</span>
+          <h3 class="font-semibold text-on-surface">Maintenance</h3>
+          <p class="text-secondary text-sm mt-2">Interventions, dépannage, besoins du quotidien.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">event_available</span>
+          <h3 class="font-semibold text-on-surface">Organisation</h3>
+          <p class="text-secondary text-sm mt-2">Réservations, coordination, gestion logistique.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">business_center</span>
+          <h3 class="font-semibold text-on-surface">Prestataires pro</h3>
+          <p class="text-secondary text-sm mt-2">Solutions adaptées à vos besoins business.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">family_home</span>
+          <h3 class="font-semibold text-on-surface">Services du quotidien</h3>
+          <p class="text-secondary text-sm mt-2">Aide pratique pour alléger votre charge mentale.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">restaurant</span>
+          <h3 class="font-semibold text-on-surface">Réservations</h3>
+          <p class="text-secondary text-sm mt-2">Restaurants, activités, déplacements et séjours.</p>
+        </div>
+
+        <div class="section-card bg-surface-container-lowest rounded-3xl p-5 sm:p-6 border border-outline-variant/20 shadow-soft text-center">
+          <span class="material-symbols-outlined text-primary text-3xl mb-3">support_agent</span>
+          <h3 class="font-semibold text-on-surface">Réseau activable</h3>
+          <p class="text-secondary text-sm mt-2">Un seul point d’entrée pour mobiliser les bons contacts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMOIGNAGES -->
+  <section class="py-16 sm:py-20 md:py-28 px-4 sm:px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 md:mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Preuve</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4 italic">Des dirigeants qui ont arrêté de tout gérer seuls</h2>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 md:gap-8 md:gap-10">
+        <div class="section-card space-y-6 text-secondary leading-relaxed bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/20 shadow-soft">
+          <p class="italic">
+            “J’ai récupéré plusieurs heures par semaine. Je délègue enfin les sujets qui me faisaient perdre un temps fou.”
+          </p>
+          <div>
+            <p class="font-bold text-on-surface text-sm">Dirigeant de PME</p>
+            <p class="text-xs uppercase tracking-widest opacity-60">Gain de temps / exécution</p>
+          </div>
+        </div>
+
+        <div class="section-card space-y-6 text-secondary leading-relaxed bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/20 shadow-soft">
+          <p class="italic">
+            “L’application est simple. J’envoie une demande en quelques secondes et je peux me reconcentrer sur mon activité.”
+          </p>
+          <div>
+            <p class="font-bold text-on-surface text-sm">Indépendant</p>
+            <p class="text-xs uppercase tracking-widest opacity-60">Simplicité / app</p>
+          </div>
+        </div>
+
+        <div class="section-card space-y-6 text-secondary leading-relaxed bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/20 shadow-soft">
+          <p class="italic">
+            “Le vrai bénéfice, ce n’est pas juste le service. C’est de ne plus avoir à gérer seul tous les petits sujets du quotidien.”
+          </p>
+          <div>
+            <p class="font-bold text-on-surface text-sm">Chef d’entreprise</p>
+            <p class="text-xs uppercase tracking-widest opacity-60">Charge mentale / fluidité</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface-container px-4 sm:px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 md:mb-20">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Process simple</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4">Comment ça fonctionne</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 xl:gap-16">
+        <div class="text-center relative bg-surface-container-lowest rounded-3xl border border-outline-variant/20 p-8 shadow-soft">
+          <div class="text-6xl font-headline font-bold text-primary/10 absolute top-4 left-1/2 -translate-x-1/2">01</div>
+          <div class="relative z-10 pt-10">
+            <span class="material-symbols-outlined text-4xl text-primary mb-6">send</span>
+            <h4 class="font-headline text-xl mb-4">Vous envoyez la demande</h4>
+            <p class="text-secondary text-sm">
+              Via l’application. Simple, rapide, sans friction.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center relative bg-surface-container-lowest rounded-3xl border border-outline-variant/20 p-8 shadow-soft">
+          <div class="text-6xl font-headline font-bold text-primary/10 absolute top-4 left-1/2 -translate-x-1/2">02</div>
+          <div class="relative z-10 pt-10">
+            <span class="material-symbols-outlined text-4xl text-primary mb-6">search_insights</span>
+            <h4 class="font-headline text-xl mb-4">Nous analysons et lançons</h4>
+            <p class="text-secondary text-sm">
+              Nous recherchons la bonne solution, activons les bons contacts et faisons avancer le sujet.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center relative bg-surface-container-lowest rounded-3xl border border-outline-variant/20 p-8 shadow-soft">
+          <div class="text-6xl font-headline font-bold text-primary/10 absolute top-4 left-1/2 -translate-x-1/2">03</div>
+          <div class="relative z-10 pt-10">
+            <span class="material-symbols-outlined text-4xl text-primary mb-6">task_alt</span>
+            <h4 class="font-headline text-xl mb-4">Vous gagnez du temps</h4>
+            <p class="text-secondary text-sm">
+              Le besoin avance, la charge mentale baisse, et vous passez à autre chose.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface-container-low px-4 sm:px-6 md:px-8" id="faq">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 md:mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Questions fréquentes</span>
+        <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4">FAQ</h2>
+        <p class="text-secondary max-w-3xl mx-auto mt-5 leading-relaxed text-sm sm:text-base">
+          Les réponses aux questions que se posent le plus souvent les dirigeants avant de déléguer.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>À qui s’adresse la Conciergerie des Dirigeants ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            La Conciergerie des Dirigeants s’adresse aux dirigeants, indépendants, micro-entreprises,
+            TPE et sociétés qui veulent déléguer leurs demandes professionnelles et personnelles
+            pour gagner du temps et réduire leur charge mentale.
+          </p>
+        </details>
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Quel type de demandes puis-je confier ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Vous pouvez nous confier des demandes professionnelles et personnelles :
+            recherche de prestataires, organisation de déplacements, prise de rendez-vous,
+            réservations, logistique, imprévus, besoins du quotidien ou recherches spécifiques.
+          </p>
+        </details>
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Que comprend l’abonnement à 79€/mois HT ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            L’abonnement comprend l’accès à l’application, l’envoi de demandes, l’orientation,
+            la recherche simple de solutions, la mise en relation avec des partenaires fiables
+            et des conseils ponctuels pour vous faire gagner du temps.
+          </p>
+        </details>
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Est-ce que tout est inclus dans les 79€/mois ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Non. L’abonnement donne accès au service, à l’application, à l’orientation et au réseau.
+            Les demandes nécessitant beaucoup de temps, une exécution opérationnelle importante
+            ou l’intervention d’un partenaire sont facturées séparément après validation.
+          </p>
+        </details>
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Quels sont les délais de réponse ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Dans le cadre de l’offre de lancement, les demandes sont traitées avec une réponse
+            ou une première orientation sous 72h ouvrées.
+          </p>
+        </details>
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Puis-je arrêter l’abonnement ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Oui. L’offre est mensuelle. Vous pouvez l’arrêter selon les conditions précisées
+            dans les conditions générales du service.
+          </p>
+        </details>
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Comment faire une demande ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Depuis l’application, en quelques clics. Vous transmettez votre besoin, nous le prenons en charge
+            et nous revenons vers vous sous les délais prévus par l’offre de lancement.
+          </p>
+        </details>
+
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Puis-je faire des demandes personnelles et professionnelles ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Oui. La conciergerie centralise les deux pour vous faire gagner du temps sur l’ensemble
+            de votre quotidien, sans multiplier les interlocuteurs.
+          </p>
+        </details>
+
+
+        <details class="faq-details bg-surface-container-lowest rounded-3xl border border-outline-variant/20 shadow-soft p-5 sm:p-6 group">
+          <summary class="flex cursor-pointer list-none items-start gap-4 justify-between font-semibold text-on-surface">
+            <span>Combien de temps faut-il pour démarrer ?</span>
+            <span class="material-symbols-outlined text-primary transition-transform duration-200 group-open:rotate-180 shrink-0">expand_more</span>
+          </summary>
+          <p class="mt-4 text-secondary leading-relaxed">
+            Très peu. Une fois votre accès activé, vous pouvez envoyer votre première demande immédiatement
+            depuis l’application.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 text-center bg-surface">
+    <div class="max-w-4xl mx-auto">
+      <span class="text-xs font-bold uppercase tracking-[0.22em] text-primary">Passez à l’action</span>
+      <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl mt-4 mb-6 md:mb-8 leading-tight">
+        Arrêtez de perdre du temps sur ce que vous pouvez déléguer
+      </h2>
+      <p class="text-secondary text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+        Vous n’avez pas besoin d’en faire plus. Vous avez besoin d’en faire moins… mais mieux.
+        Centralisez vos demandes. Déléguez ce qui vous ralentit. Avancez.
+      </p>
+
+      <div class="pt-8">
+        <a
+          class="gold-gradient text-white px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg inline-block hover:scale-[1.02] transition-transform shadow-xl w-full sm:w-auto"
+          href="https://app.laconciergeriedesdirigeants.fr/"
+        >
+          Rejoindre l’Accès Dirigeant
+        </a>
+      </div>
+
+      <p class="mt-8 text-secondary font-headline italic text-base sm:text-lg">
+        Vous dirigez. On gère le reste.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-surface-container-low w-full py-12 md:py-16 px-4 sm:px-6 md:px-8 border-t border-outline-variant/15">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start lg:items-center max-w-7xl mx-auto">
+      <div>
+        <div class="text-xl font-headline text-on-surface mb-4">La Conciergerie des Dirigeants</div>
+        <p class="text-xs sm:text-sm uppercase tracking-widest text-secondary leading-relaxed">
+          © 2026 La Conciergerie des Dirigeants. Système de délégation pour dirigeants.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-x-5 sm:gap-x-8 gap-y-3 lg:justify-end">
+        <a class="text-xs sm:text-sm uppercase tracking-widest text-secondary hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="https://app.laconciergeriedesdirigeants.fr/mentions-legales">Mentions légales</a>
+        <a class="text-xs sm:text-sm uppercase tracking-widest text-secondary hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="https://app.laconciergeriedesdirigeants.fr/confidentialite">Confidentialité</a>
+        <a class="text-xs sm:text-sm uppercase tracking-widest text-secondary hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="https://app.laconciergeriedesdirigeants.fr/cgv">Conditions générales</a>
+        <a class="text-xs sm:text-sm uppercase tracking-widest text-secondary hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="mailto:julien@picqtures.fr">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuButton.setAttribute("aria-expanded", String(!isOpen));
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          menuButton.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+  </script>
 </body>
 </html>
